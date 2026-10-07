@@ -5,8 +5,8 @@
 - [x] 403 error happens for a user with no access. 200 OK happens for a user with access. Proof: Verified via curl (user2-no-access yields 403, user2-with-access yields 200).
 - [x] The page shows a graph. Proof: Implemented AnnotationStats in cvat-ui/src/components/task-page/annotation-stats.tsx rendering a horizontal Progress bar chart of class counts.
 - [x] Empty state and error state screenshots exist. Proof: The UI explicitly handles 	otal === 0 with antd's Empty component and network drops/failures with an Alert component featuring a 'Retry' action.
-- [x] One speed target is measured 5 times. Raw output, median, and spread are shown. The target is met or missed, and the reason is given. Proof: Documented in `docs/objectives.md` (Median: ~524ms, Target: <1000ms).
-- [ ] One filter or grouping works. The reason I picked it is explained. Proof: not yet
+- [x] One speed target is measured 5 times. Raw output, median, and spread are shown. The target is met or missed, and the reason is given. Proof: Documented in `docs/objectives.md` (Median: ~346ms, Target: <500ms).
+- [x] One filter or grouping works. The reason I picked it is explained. Proof: Implemented `?group_by=shape_type` and `?shape_type=<type>` filter. Documented choice and rationale in `docs/plan.md` and `learning/01-change-log.md`. Verified via API: plain total = 8,109; polygon filter = 8,022; mask filter = 87; grouped shape breakdown for person = {'mask': 52, 'polygon': 2447}.
 - [ ] WebSocket live update works, or it is listed as not reached. Proof: not yet
 - [ ] The app reconnects after the connection drops, or it is listed as not reached. Proof: not yet
 - [ ] The decision record is written. Proof: not yet

@@ -39,3 +39,5 @@ I will fill this in at the end: what I chose, what I did not choose, and what th
 
 Changes to the plan
 Dated notes here if I change the plan, with the reason.
+- [2026-10-07 22:45] Item 7 (Filter/Grouping selection): Chose `group_by=shape_type` and `shape_type=<type>` filter (alongside optional `job_id`).
+  Rationale: The imported COCO annotations in Task 1 contain both vector contours (8,022 polygons) and raster segmentations (87 RLE masks). In computer vision workflows, users need visibility into whether annotations are represented as polygonal points or bitmap masks for pipeline compatibility and training loss functions. Adding this grouping and filtering capability gives direct operational value without altering the default plain counting behavior.
