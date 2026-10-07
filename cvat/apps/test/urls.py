@@ -1,16 +1,15 @@
-# Copyright (C) CVAT.ai Corporation
+﻿# Copyright (C) CVAT.ai Corporation
 #
 # SPDX-License-Identifier: MIT
 
-from django.urls import path
+from django.urls import include, path
+from rest_framework import routers
 
 from . import views
 
-urlpatterns = [
-    path(
-        "annotation-stats/tasks/<int:task_id>/class-counts",
-        views.class_counts,
-        name="class-counts",
-    ),
-]
+router = routers.DefaultRouter(trailing_slash=False)
+router.register("annotation-stats/tasks", views.TaskStatsViewSet, basename="annotation-stats-tasks")
 
+urlpatterns = [
+    path("", include(router.urls)),
+]
