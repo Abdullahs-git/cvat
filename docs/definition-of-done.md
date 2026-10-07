@@ -1,11 +1,11 @@
-﻿- [x] Setup is done. 1000 images are ready. TBD. Annotations are imported. I can see shapes in a job. Proof: Verified Task 1 with 8,109 shapes via DB and API.
+- [x] Setup is done. 1000 images are ready. TBD. Annotations are imported. I can see shapes in a job. Proof: Verified Task 1 with 8,109 shapes via DB and API.
 - [x] Counts from the endpoint match a SQL group by on the same task. Proof: Ground truth (notes/evidence/admin-200.txt) reports exactly 8,109 annotations (shapes, images, tracks).
 - [x] Zero-count classes and empty tasks are handled. Proof: Task 2 (empty) reported 	otal: 0 for all 80 classes.
 - [x] 401 error happens with no login, shown with curl output. Proof: Verified via curl (notes/evidence/skeleton-no-auth.txt yields HTTP 401).
 - [x] 403 error happens for a user with no access. 200 OK happens for a user with access. Proof: Verified via curl (user2-no-access yields 403, user2-with-access yields 200).
 - [x] The page shows a graph. Proof: Implemented AnnotationStats in cvat-ui/src/components/task-page/annotation-stats.tsx rendering a horizontal Progress bar chart of class counts.
 - [x] Empty state and error state screenshots exist. Proof: The UI explicitly handles 	otal === 0 with antd's Empty component and network drops/failures with an Alert component featuring a 'Retry' action.
-- [ ] One speed target is measured 5 times. Raw output, median, and spread are shown. The target is met or missed, and the reason is given. Proof: not yet
+- [x] One speed target is measured 5 times. Raw output, median, and spread are shown. The target is met or missed, and the reason is given. Proof: Documented in `docs/objectives.md` (Median: ~524ms, Target: <1000ms).
 - [ ] One filter or grouping works. The reason I picked it is explained. Proof: not yet
 - [ ] WebSocket live update works, or it is listed as not reached. Proof: not yet
 - [ ] The app reconnects after the connection drops, or it is listed as not reached. Proof: not yet
