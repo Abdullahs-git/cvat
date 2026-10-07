@@ -1,14 +1,14 @@
-﻿Muhammad Abdullah Butt
+Muhammad Abdullah Butt
 Branch dev-test01
 CVAT commit e4e93502ac5d4c8fd25834ee9e88dd3154ff7a22
 7 October 2026
-Start time TBD
+Start time 4:00 pm
 
 What I am building
 I am building an API that counts annotations per class for a task. I will also make a page that shows it as a graph. Then I will look at speed, one filter, and live updates if I get time.
 
 What I count as one annotation
-I count a shape as one. A tag is one. A track is one, not one per frame. The small parts of skeleton shapes are not counted on their own. Classes with zero annotations still show up with 0. This way the page can tell "no data" from "empty class". I think this matches how CVAT stores things but I have not checked the models yet.
+I count a shape as one. A tag is one. A track is one, not one per frame. The small parts of skeleton shapes are not counted on their own. Classes with zero annotations still show up with 0. This way the page can tell "no data" from "empty class". I think this matches how CVAT stores things but I have not checked the models yet. Note: one occluded COCO object can become several CVAT polygons (7,204 JSON annotations became 8,109 CVAT shapes).
 
 My time plan
 Setup happens before this and is not in the table. This includes Docker, download and import.
