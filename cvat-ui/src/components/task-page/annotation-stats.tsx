@@ -1,4 +1,8 @@
-﻿import React, { useEffect, useState } from 'react';
+// Copyright (C) CVAT.ai Corporation
+//
+// SPDX-License-Identifier: MIT
+
+import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'antd/lib/grid';
 import Spin from 'antd/lib/spin';
 import Alert from 'antd/lib/alert';
@@ -37,8 +41,8 @@ export default function AnnotationStats({ task }: AnnotationStatsProps): JSX.Ele
         setError(null);
         try {
             const response = await core.server.request(
-                /api/annotation-stats/tasks//class-counts,
-                { method: 'GET' }
+                `/api/annotation-stats/tasks/${task.id}/class-counts`,
+                { method: 'GET' },
             );
             setStats(response);
         } catch (err: any) {
@@ -55,7 +59,7 @@ export default function AnnotationStats({ task }: AnnotationStatsProps): JSX.Ele
     if (loading) {
         return (
             <div style={{ textAlign: 'center', padding: '20px' }}>
-                <Spin size="default" />
+                <Spin size='default' />
                 <Text style={{ marginLeft: '10px' }}>Loading annotation stats...</Text>
             </div>
         );
@@ -64,15 +68,15 @@ export default function AnnotationStats({ task }: AnnotationStatsProps): JSX.Ele
     if (error) {
         return (
             <Alert
-                message="Error"
+                message='Error'
                 description={error}
-                type="error"
+                type='error'
                 showIcon
-                action={
-                    <Button size="small" danger onClick={fetchStats}>
+                action={(
+                    <Button size='small' danger onClick={fetchStats}>
                         Retry
                     </Button>
-                }
+                )}
             />
         );
     }
@@ -80,7 +84,7 @@ export default function AnnotationStats({ task }: AnnotationStatsProps): JSX.Ele
     if (!stats || stats.total === 0) {
         return (
             <Empty
-                description="No annotations found for this task."
+                description='No annotations found for this task.'
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
             />
         );
@@ -89,13 +93,13 @@ export default function AnnotationStats({ task }: AnnotationStatsProps): JSX.Ele
     const maxCount = Math.max(...stats.classes.map((c) => c.count));
 
     return (
-        <div className="cvat-task-annotation-stats">
+        <div className='cvat-task-annotation-stats'>
             <Text strong>Annotation Statistics (Total: {stats.total})</Text>
             <div style={{ marginTop: '10px', maxHeight: '200px', overflowY: 'auto', paddingRight: '10px' }}>
                 {stats.classes.map((cls) => {
                     const percent = maxCount > 0 ? Math.round((cls.count / maxCount) * 100) : 0;
                     return (
-                        <Row key={cls.label_id} align="middle" style={{ marginBottom: '5px' }}>
+                        <Row key={cls.label_id} align='middle' style={{ marginBottom: '5px' }}>
                             <Col span={6}>
                                 <Text ellipsis title={cls.name}>{cls.name}</Text>
                             </Col>
@@ -108,7 +112,7 @@ export default function AnnotationStats({ task }: AnnotationStatsProps): JSX.Ele
                                 />
                             </Col>
                             <Col span={4} style={{ textAlign: 'right' }}>
-                                <Text type="secondary">{cls.count}</Text>
+                                <Text type='secondary'>{cls.count}</Text>
                             </Col>
                         </Row>
                     );

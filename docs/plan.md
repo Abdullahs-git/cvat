@@ -35,7 +35,19 @@ What could go wrong
 Rebuilding the server and UI from source may be slow or annoying. I think CVAT has no WebSocket support set up, so that part may need big changes. I think annotations are saved in bulk, so normal Django signals may not fire. Imports probably run in a worker process, not the web process. I will check each of these.
 
 Decision record
-I will fill this in at the end: what I chose, what I did not choose, and what that cost me.
+- What I chose (Approach taken):
+  * Backend Architecture: Django REST Framework `GenericViewSet` in a dedicated `test` app (`cvat/apps/test/`) mounted at `annotation-stats/tasks/<pk>/class-counts`.
+  * Permissions & IAM: Subclassed CVAT's `TaskPermission` (`StatsPermission`) overriding `get_scopes()` to map `('class_counts', 'GET')` to `Scopes.VIEW_ANNOTATIONS`. This plugs directly into CVAT's global `PolicyEnforcer` and Open Policy Agent (OPA) security model.
+  * Counting Service: Database-level aggregation using Django ORM `Count` with conditional `Q` filters and `distinct=True`. Query is driven from `Label.objects.filter(...)` to naturally capture and report zero-count classes without missing labels or extra database calls.
+  * UI Visualization: Reused existing Ant Design components (`Progress` horizontal bars, `Empty`, and `Alert` with retry action) in a dedicated React component (`AnnotationStats`) rendered in the task details page (`details.tsx`).
+- What I rejected (Approaches not chosen):
+  * Ad-hoc custom authorization decorators or manual user checks (would break CVAT's centralized OPA rules and organization membership checks).
+  * In-memory Python loops over annotation model instances (would create severe latency, high memory pressure, and N+1 query bottlenecks on large datasets).
+  * Heavy external charting libraries like Chart.js, Recharts, or D3 (would bloat bundle size and risk dependency tree conflicts).
+- What that cost me:
+  * Disabling CVAT's global filter backends (`filter_backends = []` on `TaskStatsViewSet`) because CVAT's default `JsonLogicSearchFilter` assumed search/ordering attributes existed and threw 500 errors on minimal viewsets.
+  * Formulating complex conditional Django ORM joins (`job__segment__task=task`) across `labeledshape`, `labeledimage`, and `labeledtrack` while ensuring skeleton child elements (`parent__isnull=False`) are excluded.
+
 
 Changes to the plan
 Dated notes here if I change the plan, with the reason.
