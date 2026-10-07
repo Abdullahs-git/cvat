@@ -26,6 +26,7 @@ import BugTrackerEditor from './bug-tracker-editor';
 import CloudStorageEditor from './cloud-storage-editor';
 import LabelsEditorComponent from '../labels-editor/labels-editor';
 import ProjectSubsetField from '../create-task-page/project-subset-field';
+import AnnotationStats from './annotation-stats';
 
 interface OwnProps {
     task: Task;
@@ -296,6 +297,11 @@ class DetailsComponent extends React.PureComponent<Props, State> {
                         </Row>
                         {!taskInstance.projectId && this.renderLabelsEditor()}
                         {taskInstance.projectId && this.renderSubsetField()}
+                        <Row justify="start" align="middle" style={{ marginTop: '10px' }}>
+                            <Col span={24}>
+                                <AnnotationStats task={taskInstance} />
+                            </Col>
+                        </Row>
                     </Col>
                 </Row>
             </div>
